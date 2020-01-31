@@ -1,0 +1,194 @@
+1. To obtain data on citibike stations in New York with region ID 71 and capacity 15 
+select * from `bigquery-public-data.new_york_citibike.citibike_stations` 
+where region_id = 71 and capacity = 15
+limit 10 
+
+Results:
+
+station_id	name	short_name	latitude	longitude	region_id	rental_methods	capacity	eightd_has_key_dispenser	num_bikes_available	num_bikes_disabled	num_docks_available	num_docks_disabled	is_installed	is_renting	is_returning	eightd_has_available_keys	last_reported
+3882	Norman St & Wyckoff Ave	4654.01	40.69517	-73.90311	71	"CREDITCARD,KEY"	15	false	12	0	3	0	true	true	true	false	2020-01-30T00:00:00
+400	Pitt St & Stanton St	5406.04	40.71926081	-73.98178024	71	"CREDITCARD,KEY"	15	false	11	0	4	0	true	true	true	false	2020-01-30T00:00:00
+3875	Stephen St & Seneca Ave	4798.10	40.6988	-73.9007	71	"CREDITCARD,KEY"	15	false	6	0	9	0	true	true	true	false	2020-01-29T00:00:00
+3612	30 Ave & 21 St	6996.01	40.7703743	-73.9286078	71	"CREDITCARD,KEY"	15	false	2	0	13	0	true	true	true	false	2020-01-30T00:00:00
+3692	5 St & Market St	4843.01	40.699997484388504	-73.97440128028393	71	"CREDITCARD,KEY"	15	false	0	0	15	0	true	true	true	false	2020-01-30T00:00:00
+
+2. To obtain data on citibike stations in New York with region ID 71 and capacity 15 and number of bikes available are between 0 and 15 and to list the data in descending order of the station ID 
+select * from `bigquery-public-data.new_york_citibike.citibike_stations` 
+where region_id = 71 and capacity = 15 and num_bikes_available between 0 and 15
+order by station_id desc
+limit 10 
+
+Results: 
+station_id	name	short_name	latitude	longitude	region_id	rental_methods	capacity	eightd_has_key_dispenser	num_bikes_available	num_bikes_disabled	num_docks_available	num_docks_disabled	is_installed	is_renting	is_returning	eightd_has_available_keys	last_reported
+3882	Norman St & Wyckoff Ave	4654.01	40.69517	-73.90311	71	"CREDITCARD,KEY"	15	false	12	0	3	0	true	true	true	false	2020-01-30T00:00:00
+3875	Stephen St & Seneca Ave	4798.10	40.6988	-73.9007	71	"CREDITCARD,KEY"	15	false	6	0	9	0	true	true	true	false	2020-01-29T00:00:00
+3692	5 St & Market St	4843.01	40.699997484388504	-73.97440128028393	71	"CREDITCARD,KEY"	15	false	0	0	15	0	true	true	true	false	2020-01-30T00:00:00
+3612	30 Ave & 21 St	6996.01	40.7703743	-73.9286078	71	"CREDITCARD,KEY"	15	false	2	0	13	0	true	true	true	false	2020-01-30T00:00:00
+400	Pitt St & Stanton St	5406.04	40.71926081	-73.98178024	71	"CREDITCARD,KEY"	15	false	11	0	4	0	true	true	true	false	2020-01-30T00:00:00
+
+3. To obtain data on the average start station latitude of male bike users in New York 
+select avg (start_station_latitude) from `bigquery-public-data.new_york_citibike.citibike_trips` 
+where gender = "male" 
+limit 10 
+
+Results: 
+f0_
+40.73696822254566
+
+4. To obtain data on the number of female bike users in New York that were born between the years 1940 and 1970 whose trip duration is between 400 and 1000 and to list the data in ascending order of the start station ID 
+select * from `bigquery-public-data.new_york_citibike.citibike_trips` 
+where gender = "female" and tripduration between 400 and 1000 and birth_year between 1940 and 1970 
+order by start_station_id asc
+limit 10
+
+Results: 
+tripduration	starttime	stoptime	start_station_id	start_station_name	start_station_latitude	start_station_longitude	end_station_id	end_station_name	end_station_latitude	end_station_longitude	bikeid	usertype	birth_year	gender	customer_plan
+641	2016-06-28T14:12:17	2016-06-28T14:22:58	72	W 52 St & 11 Ave	40.76727216	-73.99392888	479	9 Ave & W 45 St	40.76019252	-73.9912551	16094	Subscriber	1956	female	
+972	2015-10-10T09:46:04	2015-10-10T10:02:17	72	W 52 St & 11 Ave	40.76727216	-73.99392888	465	Broadway & W 41 St	40.75513557	-73.98658032	24137	Subscriber	1953	female	
+451	2015-11-26T19:07:26	2015-11-26T19:14:57	72	W 52 St & 11 Ave	40.76727216	-73.99392888	479	9 Ave & W 45 St	40.76019252	-73.9912551	23751	Subscriber	1956	female	
+438	2013-10-08T15:45:41	2013-10-08T15:52:59	72	W 52 St & 11 Ave	40.76727216	-73.99392888	450	W 49 St & 8 Ave	40.76227205	-73.98788205	15965	Subscriber	1956	female	
+522	2013-08-15T18:15:54	2013-08-15T18:24:36	72	W 52 St & 11 Ave	40.76727216	-73.99392888	380	W 4 St & 7 Ave S	40.73401143	-74.00293877	14907	Subscriber	1953	female	
+963	2016-06-24T21:19:51	2016-06-24T21:35:54	72	W 52 St & 11 Ave	40.76727216	-73.99392888	238	Bank St & Washington St	40.7361967	-74.00859207	25852	Subscriber	1950	female	
+807	2015-10-29T17:42:43	2015-10-29T17:56:10	72	W 52 St & 11 Ave	40.76727216	-73.99392888	388	W 26 St & 10 Ave	40.749717753	-74.002950346	21969	Subscriber	1953	female	
+532	2014-07-24T11:38:30	2014-07-24T11:47:22	72	W 52 St & 11 Ave	40.76727216	-73.99392888	469	Broadway & W 53 St	40.76344058	-73.98268129	18735	Subscriber	1954	female	
+553	2014-03-05T17:08:02	2014-03-05T17:17:15	72	W 52 St & 11 Ave	40.76727216	-73.99392888	468	Broadway & W 55 St	40.7652654	-73.98192338	16385	Subscriber	1953	female	
+552	2016-08-21T12:23:16	2016-08-21T12:32:29	72	W 52 St & 11 Ave	40.76727216	-73.99392888	457	Broadway & W 58 St	40.76695317	-73.98169333	20050	Subscriber	1953	female	
+
+5. To obtain data on the maximum trip duration undertaken by an individual 
+select max (tripduration) from `bigquery-public-data.new_york_citibike.citibike_trips`
+
+Results: 
+f0_
+19510049
+
+6. To obtain data on the total longitude of the citibike stations 
+select count (longitude) from `bigquery-public-data.new_york_citibike.citibike_stations`
+
+Results: 
+f0_
+935
+
+7. To obtain data on rape crimes that occurred in the UK district and to list them in ascending order of the unique key 
+select * from `bigquery-public-data.austin_crime.crime` 
+where district = "UK" and primary_type = "Rape" 
+order by unique_key asc 
+limit 10
+
+Results:
+unique_key	address	census_tract	clearance_date	clearance_status	council_district_code	description	district	latitude	longitude	location	location_description	primary_type	timestamp	x_coordinate	y_coordinate	year	zipcode
+2014950960	"Austin, TXs(30.264979, -97.746598)"		2014-04-17 00:00:00 UTC	Not cleared		"RAPE                          "	UK	30.264979	-97.746598	"(30.264979,-97.746598)"		Rape	2014-04-05 00:00:00 UTC			2014	
+2014960874	"Austin, TXs(30.264979, -97.746598)"		2014-04-14 00:00:00 UTC	Not cleared		"RAPE                          "	UK	30.264979	-97.746598	"(30.264979,-97.746598)"		Rape	2014-04-06 00:00:00 UTC			2014	
+2016250988	"Austin, TX"		2016-09-16 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-01-25 00:00:00 UTC			2016	
+2016321746	"Austin, TX"		2016-03-22 00:00:00 UTC	Not cleared		"RAPE OF A CHILD               "	UK					Rape	2016-02-01 00:00:00 UTC			2016	
+2016701037	"Austin, TX"		2016-05-04 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-03-10 00:00:00 UTC			2016	
+2016771324	"Austin, TX"		2016-04-20 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-03-17 00:00:00 UTC			2016	
+2016891605	"Austin, TX"		2016-05-04 00:00:00 UTC	Not cleared		SEXUAL ASSAULT OF CHILD/OBJECT	UK					Rape	2016-03-29 00:00:00 UTC			2016	
+20141331486	"Austin, TXs(30.264979, -97.746598)"		2014-06-24 00:00:00 UTC	Not cleared		"RAPE                          "	UK	30.264979	-97.746598	"(30.264979,-97.746598)"		Rape	2014-05-13 00:00:00 UTC			2014	
+20141340570	"Austin, TXs(30.264979, -97.746598)"		2014-06-05 00:00:00 UTC	Cleared by Exception		"RAPE                          "	UK	30.264979	-97.746598	"(30.264979,-97.746598)"		Rape	2014-05-14 00:00:00 UTC			2014	
+20141761221	"Austin, TXs(30.264979, -97.746598)"		2014-08-14 00:00:00 UTC	Not cleared		"RAPE                          "	UK	30.264979	-97.746598	"(30.264979,-97.746598)"		Rape	2014-06-25 00:00:00 UTC			2014	
+
+8. To obtain data on crimes that happened in 2016 but have not been cleared 
+select * from `bigquery-public-data.austin_crime.crime` 
+where clearance_status = "Not cleared" and year = 2016
+limit 10 
+
+Results: 
+unique_key	address	census_tract	clearance_date	clearance_status	council_district_code	description	district	latitude	longitude	location	location_description	primary_type	timestamp	x_coordinate	y_coordinate	year	zipcode
+20165002898	"Austin, TX"		2016-03-14 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-01-19 00:00:00 UTC			2016	
+20165004843	"Austin, TX"		2016-03-31 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-01-25 00:00:00 UTC			2016	
+2016250988	"Austin, TX"		2016-09-16 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-01-25 00:00:00 UTC			2016	
+20165003839	"Austin, TX"		2016-02-09 00:00:00 UTC	Not cleared		"AGG RAPE OF A CHILD           "	UK					Rape	2016-01-27 00:00:00 UTC			2016	
+2016321746	"Austin, TX"		2016-03-22 00:00:00 UTC	Not cleared		"RAPE OF A CHILD               "	UK					Rape	2016-02-01 00:00:00 UTC			2016	
+20165010113	"Austin, TX"		2016-04-12 00:00:00 UTC	Not cleared		"SEXUAL ASSAULT W/ OBJECT      "	UK					Rape	2016-02-25 00:00:00 UTC			2016	
+2016701037	"Austin, TX"		2016-05-04 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-03-10 00:00:00 UTC			2016	
+2016771324	"Austin, TX"		2016-04-20 00:00:00 UTC	Not cleared		"RAPE                          "	UK					Rape	2016-03-17 00:00:00 UTC			2016	
+20165012445	"Austin, TX"		2016-05-20 00:00:00 UTC	Not cleared		"RAPE OF A CHILD               "	UK					Rape	2016-03-24 00:00:00 UTC			2016	
+2016891605	"Austin, TX"		2016-05-04 00:00:00 UTC	Not cleared		SEXUAL ASSAULT OF CHILD/OBJECT	UK					Rape	2016-03-29 00:00:00 UTC			2016	
+
+9. To obtain data on theft crimes that occurred in the UK district between the years 2015 and 2019 and to list the data in the ascending order of the unique key 
+select * from `bigquery-public-data.austin_crime.crime` 
+where district = "UK" and primary_type = "Theft" and year between 2015 and 2019
+order by unique_key asc 
+limit 10
+
+Results: 
+unique_key	address	census_tract	clearance_date	clearance_status	council_district_code	description	district	latitude	longitude	location	location_description	primary_type	timestamp	x_coordinate	y_coordinate	year	zipcode
+2015331238	"7928 US HWY 71 WAustin, TX"		2015-02-12 00:00:00 UTC	Not cleared		"THEFT OF HEAVY EQUIPMENT      "	UK				7928 US HWY 71 W	Theft	2015-02-02 00:00:00 UTC			2015	
+2015331540	"5510 S IH 35 SVRDAustin, TX"		2015-02-11 00:00:00 UTC	Not cleared		"BURGLARY OF VEHICLE           "	UK				5510 S IH 35 SVRD	Theft	2015-02-02 00:00:00 UTC			2015	
+2015521257	"2508 EAST RIVERSIDE DRIVEAustin, TX"		2015-02-21 00:00:00 UTC	Cleared by Arrest		"THEFT                         "	UK				2508 EAST RIVERSIDE DRIVE	Theft	2015-02-21 00:00:00 UTC			2015	
+2015611033	"1030 NORWOOD PARKAustin, TX"		2015-03-02 00:00:00 UTC	Not cleared		"THEFT BY SHOPLIFTING          "	UK				1030 NORWOOD PARK	Theft	2015-03-02 00:00:00 UTC			2015	
+2015701884	"5400 FRIEDRICH LNAustin, TX"		2015-03-13 00:00:00 UTC	Not cleared		"THEFT FROM PERSON             "	UK				5400 FRIEDRICH LN	Theft	2015-03-11 00:00:00 UTC			2015	
+2015791809	"12707 N MOPAC EXPY SVRD NBAustin, TX"		2015-03-26 00:00:00 UTC	Cleared by Arrest		"THEFT                         "	UK				12707 N MOPAC EXPY SVRD NB	Theft	2015-03-20 00:00:00 UTC			2015	
+2015821204	"1713 MULLEN DRAustin, TX"		2015-03-25 00:00:00 UTC	Not cleared		"THEFT                         "	UK				1713 MULLEN DR	Theft	2015-03-23 00:00:00 UTC			2015	
+2016180558	"5751 HARTSONAustin, TX"					"BURGLARY OF VEHICLE           "	UK				5751 HARTSON	Theft	2016-01-18 00:00:00 UTC			2016	
+2016300353	"E 6TH STAustin, TX"		2016-02-08 00:00:00 UTC	Not cleared		"THEFT                         "	UK				E 6TH ST	Theft	2016-01-30 00:00:00 UTC			2016	
+2016300508	"4117 MCKINNEY FALLS PWKYAustin, TX"		2016-01-30 00:00:00 UTC	Cleared by Arrest		"THEFT                         "	UK				4117 MCKINNEY FALLS PWKY	Theft	2016-01-30 00:00:00 UTC			2016	
+
+10. to obtain data on the name and short name of the New York citibike stations and to list them 
+select table1.name, table2.short_name
+from `bigquery-public-data.new_york_citibike.citibike_stations` as table1
+join `bigquery-public-data.new_york_citibike.citibike_stations` as table2
+on (table1.name = table2.name)
+order by short_name desc
+limit 10 
+
+Results: 
+
+name	short_name
+Columbus Dr at Exchange Pl	JC106
+Hoboken Ave at Monmouth St	JC105
+Harborside	JC104
+Journal Square	JC103
+Grand St	JC102
+Montgomery St	JC099
+Washington St	JC098
+York St	JC096
+Bergen Ave	JC095
+Glenwood Ave	JC094
+
+11. To obtain data on the name, latitude and capacity of the New York citibike stations and to list the data in descending order of the names
+select table1.name, table2.latitude, table3.capacity  
+from `bigquery-public-data.new_york_citibike.citibike_stations` as table1
+join `bigquery-public-data.new_york_citibike.citibike_stations` as table2
+on (table1.name = table2.name)
+join `bigquery-public-data.new_york_citibike.citibike_stations` as table3
+on (table2.latitude = table3.latitude)
+order by name desc
+limit 10 
+
+Results: 
+name	latitude	capacity
+York St	40.71649	22
+Wythe Ave & Metropolitan Ave	40.716887	27
+Wyckoff St & Nevins St	40.683426	22
+Wyckoff St & Bond St	40.68461653897949	23
+Wyckoff Av & Stanhope St	40.703545	22
+Wyckoff Av & Jefferson St	40.707165	27
+Woodward Ave & Harman St	40.70793	19
+Wolcott St & Dwight St	40.6753274	21
+Withers St & Kingsland Ave	40.71773	18
+Wilson Ave & Troutman St	40.70166	26
+
+12. To obtain data on the name and latitude of the New York citibike stations and the tripduration of the New York citibike trips and list the data in descending order of the citibike stations names
+select table1.name, table2.latitude, table3.tripduration
+from `bigquery-public-data.new_york_citibike.citibike_stations` as table1
+join `bigquery-public-data.new_york_citibike.citibike_stations` as table2
+on (table1.name = table2.name)
+join `bigquery-public-data.new_york_citibike.citibike_trips` as table3
+on (table2.latitude = table3.start_station_latitude)
+order by name desc
+limit 10
+
+Results: 
+name	latitude	tripduration
+Wythe Ave & Metropolitan Ave	40.716887	1389
+Wythe Ave & Metropolitan Ave	40.716887	131
+Wythe Ave & Metropolitan Ave	40.716887	302
+Wythe Ave & Metropolitan Ave	40.716887	123
+Wythe Ave & Metropolitan Ave	40.716887	152
+Wythe Ave & Metropolitan Ave	40.716887	559
+Wythe Ave & Metropolitan Ave	40.716887	289
+Wythe Ave & Metropolitan Ave	40.716887	153
+Wythe Ave & Metropolitan Ave	40.716887	656
+Wythe Ave & Metropolitan Ave	40.716887	1937
+
